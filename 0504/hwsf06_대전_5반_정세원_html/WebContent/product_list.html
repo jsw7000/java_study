@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>product_list.html</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+
+	$(function() {
+		$('#productBtn').click(function() {
+			$.ajax({
+				url : 'http://127.0.0.1:8888/bootproduct/productMain',
+				dataType : 'json',
+				success : function(data) {
+					let addData = "";
+					addData += "<tr>";
+					addData += "<th>상품번호</th>";
+					addData += "<th>상품명</th>";
+					addData += "<th>수량</th>";
+					addData += "</tr>";
+					$.each(data, function(idx, p) {
+						addData += "<tr>";
+						addData += "<td>" + p['code'] + "</td>";
+						addData += "<td>" + p['name'] + "</td>";
+						addData += "<td>" + p['quantity'] + "</td>";
+						addData += "</tr>";
+					})
+					
+					$('#product-tb').html(addData);
+				},
+				error:function(){
+					alert('error');
+				}
+			})
+		})
+	})
+</script>
+</head>
+<body>
+	<table border="1" id="product-tb">
+	
+	</table>
+	<button id="productBtn">상품 목록</button>
+	<a href="product_write.html">상품 추가</a>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.board.model.mapper.BoardMapper">
+
+
+	<insert id="insert" parameterType="BoardDto">
+		INSERT INTO BOARD_TB(BTITLE, BWRITER, BCONTENT)
+		VALUES(#{btitle},#{bwriter},#{bcontent})
+	</insert>
+
+	<select id="selectOne" parameterType="int" resultType="BoardDto">
+		SELECT BNUM,BTITLE, BWRITER, BCONTENT 
+		FROM BOARD_TB 
+		WHERE BNUM=#{bnum}
+	</select>
+	
+	<select id="selectList" resultType="BoardDto">
+		SELECT BNUM, BTITLE, BWRITER, BREGDATE
+		FROM BOARD_TB
+		ORDER BY BNUM DESC LIMIT #{startRow},#{count}
+
+	</select>
+	
+	<select id="selectCount" resultType="int">
+		SELECT COUNT(*)
+		FROM BOARD_TB;
+	</select>
+
+		
+	<delete id="delete" parameterType="int">
+		DELETE
+		FROM BOARD_TB
+		WHERE BNUM = #{bnum}
+	</delete>
+	
+	<update id="update" parameterType="BoardDto">
+		UPDATE BOARD_TB
+		SET BTITLE = #{btitle},BCONTENT = #{bcontent}
+		WHERE BNUM=#{bnum}
+	</update>
+
+
+	<select id="makeSearchPage" parameterType="String" resultType="BoardDto">
+		SELECT BNUM, BTITLE, BWRITER, BREGDATE
+		FROM BOARD_TB
+		WHERE ${select} LIKE '%${search}%'
+	</select>
+
+
+</mapper>

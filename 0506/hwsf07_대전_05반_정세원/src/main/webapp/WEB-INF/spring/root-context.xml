@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+<context:component-scan base-package="com.ssafy.board.model"/>
+
+<!-- 커넥션 관리 얘가 한대여 우린 이제 개편함 -->
+	<bean class="org.apache.commons.dbcp2.BasicDataSource" id="ddd">
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/hwsf03?serverTimezone=UTC&amp;useUniCode=yes&amp;characterEncoding=UTF-8"></property>
+		<property name="username" value="ssafy"/>
+		<property name="password" value="ssafy"/>
+	</bean>		
+	
+<!-- 마이바티스 설정파일 대체. 설정파일 안만들어도 됨. 개편함 -->
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="fff">
+		<property name="dataSource" ref="ddd"/>
+		<property name="typeAliasesPackage" value="com.ssafy.board.model.dto"/>
+ 		<property name="mapperLocations" value="classpath:/**/mapper/*.xml"></property>
+	</bean>
+	
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="fff"/>
+	</bean>
+</beans>

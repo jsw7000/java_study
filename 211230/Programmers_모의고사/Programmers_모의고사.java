@@ -12,7 +12,7 @@ public class Solution {
         
         return answer;
     }
-/*    
+
     public static int[] supo(int N,int[] answers,int[] supo1,int[] supo2,int[] supo3){
         
         for(int i=0;i<N;i++){
